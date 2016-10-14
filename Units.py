@@ -1,18 +1,17 @@
 class Unit:
-    def __init__(self, x, y, shooting_range, r=50):
+    def __init__(self, x, y, shooting_range=150, r=50):
         self.x = x
         self.y = y
         self.r = r
         self.id = str(id(self))
         self.shooting_range = shooting_range #may be subclass attribute
 
-    def colliding(self, another_object):
-        if another_obect is hero:
-            self.kill()
-        else:
-            self.avoid(another_object)
+    def colliding(self, another_object): #need World's collide func
+        pass
 
-    def tick(self):
+
+    def tick(self): #frame actions here
+        pass
 
     def kill(self): #Object destruction function
         canvas.delete(self)
@@ -39,6 +38,14 @@ class Unit:
 
     def shoot(self): #Doesnt need args, always shoots at hero
         pass
+
+
+class Enemy(Unit):
+    def colliding(self, another_object): #need World's collide func
+        if another_obect is Hero:
+            self.kill()
+        else:
+            self.avoid(another_object)
 
     def behavior(self): #AI
         if distance_to_hero <= number:
