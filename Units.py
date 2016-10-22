@@ -1,4 +1,5 @@
 from random import choice
+from World import world
 
 
 class Unit:
@@ -12,16 +13,20 @@ class Unit:
         self.speed = speed
 
     def move_up(self):
-        self.y -= self.speed
+        if self.y - self.r - self.speed >= world['y']:
+            self.y -= self.speed
 
     def move_down(self):
-        self.y += self.speed
+        if self.y + self.r + self.speed <= world['height']:
+            self.y += self.speed
 
     def move_left(self):
-        self.x -= self.speed
+        if self.x - self.r - self.speed >= world['x']:
+            self.x -= self.speed
 
     def move_right(self):
-        self.x += self.speed
+        if self.x + self.r + self.speed <= world['width']:
+            self.x += self.speed
 
     def collide(self, another_object):  # need World's collide func
         self.move_away(another_object.x, another_object.y)
