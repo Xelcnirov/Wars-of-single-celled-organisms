@@ -32,4 +32,4 @@ class Animation:
         if count < 5:
             count += 1
             self.c.after(300, self.flash, object_id, count)
-        self.delete_obj(object_id)
+        delete_obj(object_id)
