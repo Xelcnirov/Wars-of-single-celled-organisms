@@ -1,105 +1,43 @@
-from tkinter import *
-import random
-
-world = {'x': 0, 'y': 0, 'w': 1000, 'h': 1000}
-SPEED = 20
-
-class Unit:
-
-    def __init__(self, x, y, r):
-        self.x = x
-        self.y = y
-        self.r = r
-
-    def moveleft(self):
-        self.x -= SPEED
-
-    def moveright(self):
-        self.x += SPEED
-
-    def moveup(self):
-        self.y -= SPEED
-
-    def movedown(self):
-        self.y += SPEED
+from World import world, spawn
 
 
 class Camera:
-
-    def __init__(self, x, y, w, h):
+    """
+    def __init__(self, x=100, y=100, width=500, height=500, speed=20):
         self.x = x
         self.y = y
-        self.w = w
-        self.h = h
+        self.w = width
+        self.h = height
+        self.speed = speed
+    """
+    def __init__(self, width=200, height=200, speed=20):
+        self.x = spawn['x'] - width
+        self.y = spawn['y'] - height
+        self.w = spawn['x'] + width
+        self.h = spawn['y'] + height
+        self.speed = speed
 
-    def moveleft(self):
-        self.x -= SPEED
+    def camleft(self):
+        if self.x - self.speed <= world['x']:
+            self.x = world['x']
+        else:
+            self.x -= self.speed
 
-    def moveright(self):
-        self.x += SPEED
+    def camright(self):
+        if self.x + self.w + self.speed >= world['width']:
+            self.x = world['width'] - self.w
+        else:
+            self.x += self.speed
 
-    def moveup(self):
-        self.y -= SPEED
+    def camup(self):
+        if self.y - self.speed <= world['y']:
+            self.y = world['y']
+        else:
+            self.y -= self.speed
 
-    def movedown(self):
-        self.y += SPEED
-
-
-def InSight():
-
-    c.delete('all')
-    for object in Objects:
-        if (object.x > camera.x - object.r or object.y > camera.y - object.r) and \
-                (object.x < camera.x + camera.w + object.r or object.y < camera.y + camera.h + object.r):
-            Draw(object)
-
-def Draw(object):
-
-        c.create_oval([object.x - object.r - camera.x, object.y - object.r - camera.y], [object.x + object.r - camera.x, object.y + object.r - camera.y], fill='yellow')
-
-def camleft(event):
-    camera.moveleft()
-    InSight()
-    if camera.x < world['x']:
-        camera.x = world['x']
-
-def camright(event):
-    camera.moveright()
-    InSight()
-    if camera.x + camera.w > world['w']:
-        camera.x = world['w'] - camera.w
-
-def camup(event):
-    camera.moveup()
-    InSight()
-    if camera.y < world['y']:
-        camera.y = world['y']
-
-def camdown(event):
-    camera.movedown()
-    InSight()
-    if camera.y + camera.h > world['h']:
-        camera.y = world['h'] - camera.h
-
-def where(event):
-    print(camera.x, camera.y, '\n', camera.x + camera.w, camera.y + camera.h)
-
-camera = Camera(100, 100, 500, 500)
-Objects = [Unit(random.randint(50, 950), random.randint(50, 950), 50) for x in range(5)]
-for i in Objects:
-    print(i.x, i.y)
-
-c = Canvas(width=500, height=500, bg='black')
-c.pack()
-InSight()
-
-c.bind('a', camleft)
-c.bind('d', camright)
-c.bind('w', camup)
-c.bind('s', camdown)
-c.bind('<space>', where)
-
-c.focus_set()
-
-mainloop()
+    def camdown(self):
+        if self.y + self.h + self.speed >= world['height']:
+            self.y = world['height'] - self.h
+        else:
+            self.y += self.speed
 
