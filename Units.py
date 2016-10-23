@@ -61,5 +61,3 @@ class Unit:
 
     def shoot(self):  # Doesn't need args, always shoots at hero
         pass
-
-

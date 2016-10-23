@@ -3,9 +3,10 @@ world = {'x': 0,
          'width': 1000,
          'height': 1000}
 
-enemies = 6  # count of enemies
-
 spawn = {'x': 400,
          'y': 400}
 
+camera_size = {'width': 400,
+               'height': 400}
 
+enemies = 6  # count of enemies

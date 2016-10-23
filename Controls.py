@@ -3,7 +3,7 @@ from tkinter import *
 from Camera import Camera
 
 camera = Camera()
-c = Canvas(width=camera.w - camera.x, height=camera.h - camera.y, bg='black')
+c = Canvas(width=camera.w, height=camera.h, bg='black')
 
 hero = Hero()
 
@@ -13,7 +13,7 @@ def key_pressed(event):
     if event.char in keys:
         if not keys[event.char][0]:
             keys[event.char][0] = 1
-            keys[event.char][1](event.char)
+            keys[event.char][1](event.char, camera, hero, c)
 
 
 def key_release(event):
@@ -22,8 +22,8 @@ def key_release(event):
         keys[event.char][0] = 0
 
 
-def up(char):
-    print('y', camera.y)
+def up(char):  # camera, hero, c
+    print('y', camera.y, hero.y)
     hero.move_up()
     camera.camup()
     if keys[char][0]:
@@ -31,7 +31,7 @@ def up(char):
 
 
 def down(char):
-    print('y', camera.y)
+    print('y', camera.y, hero.y)
     hero.move_down()
     camera.camdown()
     if keys[char][0]:
@@ -39,7 +39,7 @@ def down(char):
 
 
 def left(char):
-    print('x', camera.x)
+    print('x', camera.x, hero.x)
     hero.move_left()
     camera.camleft()
     if keys[char][0]:
@@ -47,7 +47,7 @@ def left(char):
 
 
 def right(char):
-    print('x', camera.x)
+    print('x', camera.x, hero.x)
     hero.move_right()
     camera.camright()
     if keys[char][0]:
@@ -58,9 +58,9 @@ keys = {'w': [0, up],
         'a': [0, left],
         'd': [0, right]}
 
-c.pack()
+#c.pack()
 
-c.bind('<Key>', key_pressed)  # <KeyPress>
-c.bind('<KeyRelease>', key_release)  # <KeyRelease>
-c.focus_set()
-mainloop()
+#c.bind('<Key>', key_pressed)  # <KeyPress>
+#c.bind('<KeyRelease>', key_release)  # <KeyRelease>
+#c.focus_set()
+#mainloop()

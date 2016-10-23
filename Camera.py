@@ -1,4 +1,4 @@
-from World import world, spawn
+from World import world, spawn, camera_size
 
 
 class Camera:
@@ -10,11 +10,11 @@ class Camera:
         self.h = height
         self.speed = speed
     """
-    def __init__(self, width=200, height=200, speed=20):
-        self.x = spawn['x'] - width
-        self.y = spawn['y'] - height
-        self.w = spawn['x'] + width
-        self.h = spawn['y'] + height
+    def __init__(self, width=camera_size['width'], height=camera_size['height'], speed=20):
+        self.x = spawn['x'] - width//2
+        self.y = spawn['y'] - height//2
+        self.w = width  # spawn['x'] + width//2
+        self.h = height  # spawn['y'] + height//2
         self.speed = speed
 
     def camleft(self):
@@ -40,4 +40,3 @@ class Camera:
             self.y = world['height'] - self.h
         else:
             self.y += self.speed
-

@@ -1,13 +1,15 @@
 from tkinter import *
 from Units import Unit
-from Camera import Camera
+#from Camera import Camera
 
 camera = Unit(1, 1)
 
+
 class Animation:
     def __init__(self):
-        self.c = Canvas(width=200, height=200, bg='black')
+        self.c = Canvas(width=400, height=400, bg='black')
         self.c.pack()
+        self.c.focus_set()
 
     def draw(self, object):
         object.visual = self.c.create_oval([object.x - object.r - camera.x, object.y - object.r - camera.y],
@@ -30,14 +32,15 @@ class Animation:
     def kill(self, object, count=0):
         count = count
         if count < 5:
-            Animation.flash(self, object)
+            self.flash(object)
             count += 1
             self.c.after(300, self.kill, object, count)
         else:
-            Animation.delete_obj(self, object)
-
+            self.delete_obj(object)
+'''
 test = Animation()
 test1 = Unit(100, 100)
 test.draw(test1)
 test.kill(test1, 0)
 mainloop()
+'''
