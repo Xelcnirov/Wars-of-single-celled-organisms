@@ -5,11 +5,11 @@
 #camera = Camera()
 #screen = Canvas(width=camera.w, height=camera.h, bg='black')
 #hero = Hero()
-
+from Projectile import Projectile
 
 class Controls:
 
-    def __init__(self, camera, hero, screen):
+    def __init__(self, camera, hero, screen, good_shots):
         self.keys = {'w': [0, self.up],
                      's': [0, self.down],
                      'a': [0, self.left],
@@ -17,6 +17,7 @@ class Controls:
         self.camera = camera
         self.hero = hero
         self.screen = screen
+        self.good_shots = good_shots
 
     def key_pressed(self, event):  # camera, hero, screen
         # print(repr(event.char))
@@ -58,6 +59,9 @@ class Controls:
             print('x', self.camera.x, self.hero.x)
             self.screen.after(100, self.keys[char][1], char)
 
+    def click(self, event):
+        self.good_shots.append(Projectile(self.hero.x, self.hero.y, event.x + self.camera.x, event.y + self.camera.y))
+        print(event.x, event.y)
 '''
 
 def key_release(event):
