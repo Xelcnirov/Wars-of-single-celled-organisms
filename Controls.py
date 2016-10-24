@@ -1,20 +1,64 @@
-from Hero import Hero
-from tkinter import *
-from Camera import Camera
+#from Hero import Hero
+#from tkinter import *
+#from Camera import Camera
 
-camera = Camera()
-c = Canvas(width=camera.w, height=camera.h, bg='black')
+#camera = Camera()
+#screen = Canvas(width=camera.w, height=camera.h, bg='black')
+#hero = Hero()
 
-hero = Hero()
 
+class Controls:
 
-def key_pressed(event):
-    #print(repr(event.char))
-    if event.char in keys:
-        if not keys[event.char][0]:
-            keys[event.char][0] = 1
-            keys[event.char][1](event.char, camera, hero, c)
+    def __init__(self, camera, hero, screen):
+        self.keys = {'w': [0, self.up],
+                     's': [0, self.down],
+                     'a': [0, self.left],
+                     'd': [0, self.right]}
+        self.camera = camera
+        self.hero = hero
+        self.screen = screen
 
+    def key_pressed(self, event):  # camera, hero, screen
+        # print(repr(event.char))
+        if event.char in self.keys:
+            if not self.keys[event.char][0]:
+                self.keys[event.char][0] = 1
+                self.keys[event.char][1](event.char)
+
+    def key_release(self, event):
+        print('release', repr(event.char))
+        if event.char in self.keys:
+            self.keys[event.char][0] = 0
+
+    def up(self, char):
+        if self.keys[char][0]:
+            self.hero.move_up()
+            self.camera.camup()
+            print('y', self.camera.y, self.hero.y)
+            self.screen.after(100, self.up, char)
+
+    def down(self, char):
+        if self.keys[char][0]:
+            self.hero.move_down()
+            self.camera.camdown()
+            print('y', self.camera.y, self.hero.y)
+            self.screen.after(100, self.keys[char][1], char)
+
+    def left(self, char):
+        if self.keys[char][0]:
+            self.hero.move_left()
+            self.camera.camleft()
+            print('x', self.camera.x, self.hero.x)
+            self.screen.after(100, self.keys[char][1], char)
+
+    def right(self, char):
+        if self.keys[char][0]:
+            self.hero.move_right()
+            self.camera.camright()
+            print('x', self.camera.x, self.hero.x)
+            self.screen.after(100, self.keys[char][1], char)
+
+'''
 
 def key_release(event):
     print('release', repr(event.char))
@@ -22,7 +66,7 @@ def key_release(event):
         keys[event.char][0] = 0
 
 
-def up(char):  # camera, hero, c
+def up(char):  # camera, hero, screen
     print('y', camera.y, hero.y)
     hero.move_up()
     camera.camup()
@@ -57,10 +101,10 @@ keys = {'w': [0, up],
         's': [0, down],
         'a': [0, left],
         'd': [0, right]}
+'''
+#screen.pack()
 
-#c.pack()
-
-#c.bind('<Key>', key_pressed)  # <KeyPress>
-#c.bind('<KeyRelease>', key_release)  # <KeyRelease>
-#c.focus_set()
+#screen.bind('<Key>', a.key_pressed)  # <KeyPress>
+#screen.bind('<KeyRelease>', a.key_release)  # <KeyRelease>
+#screen.focus_set()
 #mainloop()

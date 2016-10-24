@@ -1,16 +1,9 @@
-from World import world, spawn, camera_size
+from World import world, spawn, camera_size, hero_speed
 
 
 class Camera:
-    """
-    def __init__(self, x=100, y=100, width=500, height=500, speed=20):
-        self.x = x
-        self.y = y
-        self.w = width
-        self.h = height
-        self.speed = speed
-    """
-    def __init__(self, width=camera_size['width'], height=camera_size['height'], speed=20):
+
+    def __init__(self, width=camera_size['width'], height=camera_size['height'], speed=hero_speed):
         self.x = spawn['x'] - width//2
         self.y = spawn['y'] - height//2
         self.w = width  # spawn['x'] + width//2

@@ -1,12 +1,11 @@
 from math import sqrt
 from random import randint
 from Enemy import Enemy
-from tkinter import *
-#import World
+from tkinter import mainloop
 from World import world, enemies
 from Hero import Hero
 from Animation import Animation
-from Controls import *
+from Controls import Controls
 from Camera import Camera
 
 
@@ -24,14 +23,23 @@ def random_coords():
     return x, y
 
 
-#def ticks(event):
-#    for u1 in bad_units:
-#        for u2 in bad_units:
-#            if colliding(u1, u2):
-#                u1.collide(u2)
-#    for unit in bad_units:
-#        unit.tick()
+def ticks():  # event
+    #animation.screen.delete('all')
+    for x in bad_units + [hero]:
+        animation.delete_obj(x)
+        animation.draw(x)
+    #animation.draw(hero)
+    for u1 in bad_units + [hero]:
+        for u2 in bad_units:
+            if colliding(u1, u2):
+                u1.collide(u2)
+                u2.collide(u1)
+    #for unit in bad_units + [hero]:
+    #    unit.tick()
+    hero.tick()
+    animation.screen.after(100, ticks)
 #    InSight()
+
 
 hero = Hero()
 good_units = []
@@ -39,23 +47,8 @@ bad_units = [Enemy(*random_coords()) for x in range(enemies)]
 good_shots = []
 bad_shots = []
 camera = Camera()
-c = Animation()
-
-'''
-def InSight():
-    c.delete('all')
-    draw(hero)
-    # ticks()
-    for object in bad_units:
-        if (object.x > camera.x - object.r or object.y > camera.y - object.r) and \
-                (object.x < camera.x + camera.w + object.r or object.y < camera.y + camera.h + object.r):
-            draw(object)
-
-
-def draw(object):
-    c.create_oval([object.x - object.r - camera.x, object.y - object.r - camera.y],
-                  [object.x + object.r - camera.x, object.y + object.r - camera.y], fill='yellow')
-'''
+animation = Animation(camera)
+controls = Controls(camera, hero, animation.screen)
 
 
 def where(event):
@@ -65,19 +58,12 @@ def where(event):
 for i in bad_units:
     print(i.x, i.y)
 
-#c = Canvas(width=camera.w, height=camera.h, bg='black')
-#c.pack()
-
-
-#c.bind('a', camera.camleft)
-#c.bind('d', camera.camright)
-#c.bind('w', camera.camup)
-#c.bind('s', camera.camdown)
-c.c.bind('<space>', where)
-c.c.bind('<Key>', key_pressed)  # <KeyPress>
-c.c.bind('<KeyRelease>', key_release)  # <KeyRelease>
-#c.bind('<Motion>', ticks)
-
-#c.c.focus_set()
+animation.draw(hero)
+ticks()
+animation.screen.bind('<space>', where)
+animation.screen.bind('<Key>', controls.key_pressed)  # <KeyPress>
+animation.screen.bind('<KeyRelease>', controls.key_release)  # <KeyRelease>
+#screen.bind('<Motion>', ticks)
+#screen.screen.focus_set()
 
 mainloop()

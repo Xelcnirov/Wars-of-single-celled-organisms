@@ -3,7 +3,7 @@ from World import world
 
 
 class Unit:
-    def __init__(self, x, y, r=50, shooting_range=150, speed=10, visual=None):
+    def __init__(self, x, y, r=50, shooting_range=150, speed=10, visual=None, colour='yellow'):
         self.x = x
         self.y = y
         self.r = r
@@ -12,6 +12,7 @@ class Unit:
         self.shooting_range = shooting_range  # may be subclass attribute
         self.speed = speed
         self.visual = visual
+        self.colour = colour
 
     def move_up(self):
         if self.y - self.r - self.speed >= world['y']:
