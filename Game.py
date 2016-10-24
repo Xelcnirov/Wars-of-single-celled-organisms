@@ -7,6 +7,7 @@ from Hero import Hero
 from Animation import Animation
 from Controls import Controls
 from Camera import Camera
+#from subject21 import Projectile
 
 
 def get_distance(u1, u2):
@@ -25,7 +26,7 @@ def random_coords():
 
 def ticks():  # event
     #animation.screen.delete('all')
-    for x in bad_units + [hero]:
+    for x in bad_units + [hero] + good_shots:
         animation.delete_obj(x)
         animation.draw(x)
     #animation.draw(hero)
@@ -35,9 +36,11 @@ def ticks():  # event
                 u1.collide(u2)
                 u2.collide(u1)
     #for unit in bad_units + [hero]:
-    #    unit.tick()
+        #unit.tick()
+    for x in good_shots:
+        x.tick()
     hero.tick()
-    animation.screen.after(100, ticks)
+    animation.screen.after(80, ticks)
 #    InSight()
 
 
@@ -48,7 +51,7 @@ good_shots = []
 bad_shots = []
 camera = Camera()
 animation = Animation(camera)
-controls = Controls(camera, hero, animation.screen)
+controls = Controls(camera, hero, animation.screen, good_shots)
 
 
 def where(event):
@@ -63,6 +66,7 @@ ticks()
 animation.screen.bind('<space>', where)
 animation.screen.bind('<Key>', controls.key_pressed)  # <KeyPress>
 animation.screen.bind('<KeyRelease>', controls.key_release)  # <KeyRelease>
+animation.screen.bind('<Button-1>', controls.click)
 #screen.bind('<Motion>', ticks)
 #screen.screen.focus_set()
 
