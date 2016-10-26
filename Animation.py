@@ -20,8 +20,15 @@ class Animation:
                                                  object.y + object.r - self.camera.y],
                                                 fill=object.colour)
 
-    #def draw_hero(self, H1, H2, H3, H4):
-        #self.screen.create_oval(H1, H2, H3, H4, fill='blue')
+        #if object.a:   check draw
+        #    print('hohoho', object.x, object.y)
+        #    object.a = False
+
+    def insight(self, object):
+        if (object.x > self.camera.x - object.r and object.y > self.camera.y - object.r) and \
+                (object.x < self.camera.x + self.camera.w + object.r and
+                 object.y < self.camera.y + self.camera.h + object.r):
+            self.draw(object)
 
     def delete_obj(self, object):
         self.screen.delete(object.visual)

@@ -3,12 +3,11 @@ from Units import Unit
 
 class Projectile(Unit):
     def __init__(self, x, y, target_x, target_y):
-        Unit.__init__(self, x, y, r=10, shooting_range=150, speed=3, colour='red')
+        Unit.__init__(self, x, y, r=10, shooting_range=300, speed=15, colour='red')
         self.target_x = target_x
         self.target_y = target_y
         self.step = self.shooting_range/self.speed
         self.proj_calc(target_x, target_y)
-
 
     def proj_calc(self, target_x, target_y):
         slip_x = target_x - self.x
@@ -64,3 +63,5 @@ class Projectile(Unit):
         #else:
             #animation.delete_obj(self)
 
+    def collide(self):
+        self.step = 0

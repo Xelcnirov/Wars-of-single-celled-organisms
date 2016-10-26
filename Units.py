@@ -3,7 +3,7 @@ from World import world
 
 
 class Unit:
-    def __init__(self, x, y, r=50, shooting_range=150, speed=10, visual=None, colour='yellow'):
+    def __init__(self, x, y, r=50, shooting_range=150, speed=10, visual=True, colour='yellow'):
         self.x = x
         self.y = y
         self.r = r
@@ -13,6 +13,7 @@ class Unit:
         self.speed = speed
         self.visual = visual
         self.colour = colour
+        #self.a = True  # check draw
 
     def move_up(self):
         if self.y - self.r - self.speed >= world['y']:

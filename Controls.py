@@ -7,6 +7,7 @@
 #hero = Hero()
 from Projectile import Projectile
 
+
 class Controls:
 
     def __init__(self, camera, hero, screen, good_shots):
@@ -36,28 +37,28 @@ class Controls:
             self.hero.move_up()
             self.camera.camup()
             print('y', self.camera.y, self.hero.y)
-            self.screen.after(100, self.up, char)
+            self.screen.after(50, self.keys[char][1], char)
 
     def down(self, char):
         if self.keys[char][0]:
             self.hero.move_down()
             self.camera.camdown()
             print('y', self.camera.y, self.hero.y)
-            self.screen.after(100, self.keys[char][1], char)
+            self.screen.after(50, self.keys[char][1], char)
 
     def left(self, char):
         if self.keys[char][0]:
             self.hero.move_left()
             self.camera.camleft()
             print('x', self.camera.x, self.hero.x)
-            self.screen.after(100, self.keys[char][1], char)
+            self.screen.after(50, self.keys[char][1], char)
 
     def right(self, char):
         if self.keys[char][0]:
             self.hero.move_right()
             self.camera.camright()
             print('x', self.camera.x, self.hero.x)
-            self.screen.after(100, self.keys[char][1], char)
+            self.screen.after(50, self.keys[char][1], char)
 
     def click(self, event):
         self.good_shots.append(Projectile(self.hero.x, self.hero.y, event.x + self.camera.x, event.y + self.camera.y))

@@ -12,6 +12,4 @@ camera_size = {'width': 500,
 
 enemies = 30  # count of enemies
 
-hero_speed = 20
-
-
+hero_speed = 10
