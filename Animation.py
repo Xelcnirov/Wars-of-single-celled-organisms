@@ -1,9 +1,5 @@
 from tkinter import *
 from World import camera_size
-#from Units import Unit
-#from Camera import Camera
-
-#camera = Unit(1, 1)
 
 
 class Animation:
@@ -19,10 +15,6 @@ class Animation:
                                                 [object.x + object.r - self.camera.x,
                                                  object.y + object.r - self.camera.y],
                                                 fill=object.colour)
-
-        #if object.a:   check draw
-        #    print('hohoho', object.x, object.y)
-        #    object.a = False
 
     def insight(self, object):
         if (object.x > self.camera.x - object.r and object.y > self.camera.y - object.r) and \
@@ -50,14 +42,3 @@ class Animation:
             self.screen.after(300, self.kill, object, count)
         else:
             self.delete_obj(object)
-'''
-test = Animation()
-test1 = Unit(100, 100)
-test2 = Unit(200, 200)
-test.draw(test1)
-test.kill(test1, 0)
-test.draw(test2)
-test.kill(test2, 0)
-test.draw(test2)
-mainloop()
-'''

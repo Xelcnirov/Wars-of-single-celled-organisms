@@ -11,9 +11,7 @@ class Projectile(Unit):
 
     def proj_calc(self, target_x, target_y):
         slip_x = target_x - self.x
-        #print('slipX', slip_x)
         slip_y = target_y - self.y
-        #print('slipY', slip_y)
         self.breaker = 1
         self.side = True
         self.check_shot = True
@@ -41,7 +39,6 @@ class Projectile(Unit):
             self.speed_y = -self.speed
         else:
             self.speed_y = 0
-        #print('breaker', self.breaker)
         self.tick()
 
     def tick(self):

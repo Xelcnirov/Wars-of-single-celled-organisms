@@ -13,7 +13,6 @@ class Unit:
         self.speed = speed
         self.visual = visual
         self.colour = colour
-        #self.a = True  # check draw
 
     def move_up(self):
         if self.y - self.r - self.speed >= world['y']:

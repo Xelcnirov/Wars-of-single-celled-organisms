@@ -2,7 +2,7 @@ from math import sqrt
 from random import randint
 from Enemy import Enemy
 from tkinter import mainloop
-from World import world, enemies
+from World import world, enemies, DELAY
 from Hero import Hero
 from Animation import Animation
 from Controls import Controls
@@ -24,15 +24,15 @@ def random_coords():
 
 
 def ticks():  # event
-    #animation.screen.delete('all')
+    animation.screen.delete('all')
     for x in good_shots + bad_units + [hero]:
-        animation.delete_obj(x)
+        #animation.delete_obj(x)
         animation.insight(x)
-    #animation.delete_obj(hero)
-    #animation.draw(hero)
     for u1 in bad_units + [hero]:
         for u2 in bad_units:
-            if colliding(u1, u2):
+            if u1 == u2:
+                pass
+            elif colliding(u1, u2):
                 u1.collide(u2)
                 u2.collide(u1)
     for x in good_shots:
@@ -42,14 +42,14 @@ def ticks():  # event
     for u1 in bad_units:
         for u2 in good_shots:
             if colliding(u1, u2):
-                #u1.collide(u2)
+                # u1.collide(u2)
                 u2.collide()
     #for unit in bad_units:
         #unit.tick()
     for x in good_shots:
         x.tick()
     hero.tick()
-    animation.screen.after(50, ticks)
+    animation.screen.after(DELAY, ticks)
 
 
 hero = Hero()
@@ -68,7 +68,6 @@ def where(event):
 
 for i in bad_units:
     print(i.x, i.y)
-
 
 #animation.draw(hero)
 ticks()
