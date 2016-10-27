@@ -31,7 +31,7 @@ class Unit:
             self.x += self.speed
 
     def collide(self, another_object):  # need World's collide func
-        self.move_away(another_object.x, another_object.y)
+        self.move_away(another_object)
 
     def tick(self):  # frame actions here
         choice([self.move_down, self.move_up, self.move_left, self.move_right])()
@@ -40,24 +40,24 @@ class Unit:
         # canvas.delete(self)
         pass
 
-    def move_to(self, ax, ay):
-        if self.x > ax:
+    def move_to(self, another_object):
+        if self.x > another_object.x:
             self.move_left()
-        elif self.x < ax:
+        elif self.x < another_object.x:
             self.move_right()
-        if self.y > ay:
+        if self.y > another_object.y:
             self.move_up()
-        elif self.y < ay:
+        elif self.y < another_object.y:
             self.move_down()
 
-    def move_away(self, ax, ay):
-        if self.x > ax:
+    def move_away(self, another_object):
+        if self.x > another_object.x:
             self.move_right()
-        elif self.x < ax:
+        elif self.x < another_object.x:
             self.move_left()
-        if self.y > ay:
+        if self.y > another_object.y:
             self.move_down()
-        elif self.y < ay:
+        elif self.y < another_object.y:
             self.move_up()
 
     def shoot(self):  # Doesn't need args, always shoots at hero

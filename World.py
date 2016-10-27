@@ -12,5 +12,5 @@ camera_size = {'width': 700,
 
 enemies = 40  # count of enemies
 
-HERO_MAX_SPEED = 12
-DELAY = 40
+HERO_MAX_SPEED = 8
+DELAY = 20
