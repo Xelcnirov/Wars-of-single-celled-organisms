@@ -6,13 +6,15 @@ class Hero(Unit):
     def __init__(self):
         Unit.__init__(self, x=start['x'], y=start['y'], r=40, colour='blue')
         self.counter = 0
-        self.speed_x = 0
-        self.speed_y = 0
         self.max_speed = HERO_MAX_SPEED
-        self.moving_up = False
-        self.moving_down = False
-        self.moving_right = False
-        self.moving_left = False
+        self.moving = {'up': False,
+                       'down': False,
+                       'right': False,
+                       'left': False}
+        self.speed = {'y_up': 0,
+                      'y_down': 0,
+                      'x_right': 0,
+                      'x_left': 0}
 
     def tick(self):  # for fun
         if self.colour == 'green':
@@ -22,68 +24,52 @@ class Hero(Unit):
             self.colour = 'blue'
 
     def move_up(self):
-        if self.moving_up:
-            if self.speed_y - 1 > -self.max_speed:
-                self.speed_y -= 1
-            else:
-                self.speed_y = -self.max_speed
+        if self.moving['up']:
+            if self.speed['y_up'] - 1 >= -self.max_speed:
+                self.speed['y_up'] -= 1
         else:
-            if self.speed_y + 1 < 0:
-                self.speed_y += 1
-            else:
-                self.speed_y = 0
-        if self.y + self.speed_y <= world['y'] + self.r:
+            if self.speed['y_up'] + 1 <= 0:
+                self.speed['y_up'] += 1
+        if self.y + self.speed['y_up'] <= world['y'] + self.r:
             self.y = world['y'] + self.r
         else:
-            self.y += self.speed_y
+            self.y += self.speed['y_up']
 
     def move_down(self):
-        if self.moving_down:
-            if self.speed_y + 1 < self.max_speed:
-                self.speed_y += 1
-            else:
-                self.speed_y = self.max_speed
+        if self.moving['down']:
+            if self.speed['y_down'] + 1 <= self.max_speed:
+                self.speed['y_down'] += 1
         else:
-            if self.speed_y - 1 > 0:
-                self.speed_y -= 1
-            else:
-                self.speed_y = 0
-        if self.y + self.speed_y >= world['height'] - self.r:
+            if self.speed['y_down'] - 1 >= 0:
+                self.speed['y_down'] -= 1
+        if self.y + self.speed['y_down'] >= world['height'] - self.r:
             self.y = world['height'] - self.r
         else:
-            self.y += self.speed_y
+            self.y += self.speed['y_down']
 
     def move_left(self):
-        if self.moving_left:
-            if self.speed_x - 1 > -self.max_speed:
-                self.speed_x -= 1
-            else:
-                self.speed_x = -self.max_speed
+        if self.moving['left']:
+            if self.speed['x_left'] - 1 >= -self.max_speed:
+                self.speed['x_left'] -= 1
         else:
-            if self.speed_x + 1 < 0:
-                self.speed_x += 1
-            else:
-                self.speed_x = 0
-        if self.x + self.speed_x <= world['x'] + self.r:
+            if self.speed['x_left'] + 1 <= 0:
+                self.speed['x_left'] += 1
+        if self.x + self.speed['x_left'] <= world['x'] + self.r:
             self.x = world['x'] + self.r
         else:
-            self.x += self.speed_x
+            self.x += self.speed['x_left']
 
     def move_right(self):
-        if self.moving_right:
-            if self.speed_x + 1 < self.max_speed:
-                self.speed_x += 1
-            else:
-                self.speed_x = self.max_speed
+        if self.moving['right']:
+            if self.speed['x_right'] + 1 <= self.max_speed:
+                self.speed['x_right'] += 1
         else:
-            if self.speed_x - 1 > 0:
-                self.speed_x -= 1
-            else:
-                self.speed_x = 0
-        if self.x + self.speed_x >= world['width'] - self.r:
+            if self.speed['x_right'] - 1 >= 0:
+                self.speed['x_right'] -= 1
+        if self.x + self.speed['x_right'] >= world['width'] - self.r:
             self.x = world['width'] - self.r
         else:
-            self.x += self.speed_x
+            self.x += self.speed['x_right']
 
     def collide(self, another_object):
         self.colour = 'green'

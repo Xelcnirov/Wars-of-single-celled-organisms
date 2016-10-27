@@ -14,7 +14,7 @@ class Animation:
                                                  object.y - object.r - self.camera.y],
                                                 [object.x + object.r - self.camera.x,
                                                  object.y + object.r - self.camera.y],
-                                                fill=object.colour)
+                                                fill='#1c2635', width=5, outline=object.colour)
 
     def insight(self, object):
         if (object.x > self.camera.x - object.r and object.y > self.camera.y - object.r) and \
