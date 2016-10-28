@@ -3,10 +3,9 @@ from World import start, world, HERO_MAX_SPEED
 
 
 class Hero(Unit):
-    def __init__(self, level=2, health=10):
+    def __init__(self, health=10):
         Unit.__init__(self, x=start['x'], y=start['y'], r=40, colour='blue')
         self.counter = 0
-        self.level = level
         self.health = health
         self.max_speed = HERO_MAX_SPEED
         self.moving = {'up': False,

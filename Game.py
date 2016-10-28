@@ -45,14 +45,15 @@ def ticks():  # event
                 # u1.collide(u2)
                 u2.collide()
     for unit in bad_units:
-        if unit.exp >= 5 and unit.level < 5:
-            unit.level_up()
-        if 1 < unit.level > 5:
+        # if unit.exp >= 5 > unit.level:
+        #     unit.level_up()
+        if 1 < unit.level < 5:
             for x in bad_units:
                 if get_distance(unit, x) <= unit.vision_range:
                     if unit.level - x.level == (1 or 2):
                         unit.move_to(x)
-                        break
+                        # print('moving')
+                        # break
         else:
             unit.tick()
     for x in good_shots:
@@ -63,7 +64,7 @@ def ticks():  # event
 
 hero = Hero()
 good_units = []
-bad_units = [Enemy(*random_coords(), level=randint(1, 2)) for x in range(enemies)]
+bad_units = [Enemy(*random_coords(), level=randint(0, 1)) for x in range(enemies)]
 good_shots = []
 bad_shots = []
 camera = Camera()
@@ -75,8 +76,8 @@ def where(event):
     print(camera.x, camera.y, '\n', camera.x + camera.w, camera.y + camera.h)
 
 
-for i in bad_units:
-    print(i.x, i.y)
+# for i in bad_units:
+#     print(i.x, i.y)
 
 #animation.draw(hero)
 ticks()

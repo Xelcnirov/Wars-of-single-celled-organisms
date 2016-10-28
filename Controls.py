@@ -32,7 +32,7 @@ class Controls:
             self.hero.moving['up'] = True
             self.hero.move_up()
             self.camera.camup(self.hero.speed['y_up'])
-            print('y', self.camera.y, self.hero.y)
+            #print('y', self.camera.y, self.hero.y)
             self.screen.after(DELAY, self.keys[char][1], char)
         else:
             self.keys[char][2](char)
@@ -42,7 +42,7 @@ class Controls:
             self.hero.moving['down'] = True
             self.hero.move_down()
             self.camera.camdown(self.hero.speed['y_down'])
-            print('y', self.camera.y, self.hero.y)
+            #print('y', self.camera.y, self.hero.y)
             self.screen.after(DELAY, self.keys[char][1], char)
         else:
             self.keys[char][2](char)
@@ -52,7 +52,7 @@ class Controls:
             self.hero.moving['left'] = True
             self.hero.move_left()
             self.camera.camleft(self.hero.speed['x_left'])
-            print('x', self.camera.x, self.hero.x)
+            #print('x', self.camera.x, self.hero.x)
             self.screen.after(DELAY, self.keys[char][1], char)
         else:
             self.keys[char][2](char)
@@ -62,7 +62,7 @@ class Controls:
             self.hero.moving['right'] = True
             self.hero.move_right()
             self.camera.camright(self.hero.speed['x_right'])
-            print('x', self.camera.x, self.hero.x)
+            #print('x', self.camera.x, self.hero.x)
             self.screen.after(DELAY, self.keys[char][1], char)
         else:
             self.keys[char][2](char)
@@ -73,7 +73,7 @@ class Controls:
             if self.hero.speed['y_up'] < 0:
                 self.hero.move_up()
                 self.camera.camup(self.hero.speed['y_up'])
-                print('y2', self.camera.y, self.hero.y)
+                #print('y2', self.camera.y, self.hero.y)
                 self.screen.after(DELAY, self.keys[char][2], char)
             # else:
             #     self.hero.speed['y_up'] = 0
@@ -84,7 +84,7 @@ class Controls:
             if self.hero.speed['y_down'] > 0:
                 self.hero.move_down()
                 self.camera.camdown(self.hero.speed['y_down'])
-                print('y2', self.camera.y, self.hero.y)
+                #print('y2', self.camera.y, self.hero.y)
                 self.screen.after(DELAY, self.keys[char][2], char)
             # else:
             #     self.hero.speed['y_down'] = 0
@@ -95,7 +95,7 @@ class Controls:
             if self.hero.speed['x_left'] < 0:
                 self.hero.move_left()
                 self.camera.camleft(self.hero.speed['x_left'])
-                print('x2', self.camera.x, self.hero.x)
+                #print('x2', self.camera.x, self.hero.x)
                 self.screen.after(DELAY, self.keys[char][2], char)
             # else:
             #     self.hero.speed['x_left'] = 0
@@ -106,7 +106,7 @@ class Controls:
             if self.hero.speed['x_right'] > 0:
                 self.hero.move_right()
                 self.camera.camright(self.hero.speed['x_right'])
-                print('x2', self.camera.x, self.hero.x)
+                #print('x2', self.camera.x, self.hero.x)
                 self.screen.after(DELAY, self.keys[char][2], char)
             # else:
             #     self.hero.speed['x_right'] = 0
