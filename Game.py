@@ -10,13 +10,18 @@ from Camera import Camera
 
 
 def get_distance(u1, u2):
-
-    return sqrt((u1.x - u2.x)**2 + (u1.y - u2.y)**2)
+    if abs(u1.x - u2.x) <= u1.r + u2.r >= abs(u1.y - u2.y):
+        return sqrt((u1.x - u2.x)**2 + (u1.y - u2.y)**2)
+    else:
+        return False
 
 
 def colliding(u1, u2):
     dist = get_distance(u1, u2)
-    return dist <= u1.r + u2.r
+    if dist:
+        return dist <= u1.r + u2.r
+    else:
+        return False
 
 
 def random_coords():
@@ -25,28 +30,31 @@ def random_coords():
 
 
 def ticks():  # event
-    all_units = bad_units + [hero]
+    all_units = [hero] + bad_units
     all_shots = good_shots + bad_shots
     animation.screen.delete('all')
     animation.check_border()
-    for x in all_shots + all_units:
-        # animation.delete_obj(x)
-        animation.insight(x)
+    # for x in all_shots + all_units:
+    #     # animation.delete_obj(x)
+    #     animation.insight(x)
 
     for shots in [good_shots] + [bad_shots]:
         for shot in shots:
+            animation.insight(shot)
             if shot.step == 0:
                 # animation.delete_obj(x)
                 shots.remove(shot)
             shot.tick()
-
+    collide_checker = 0
     for unit_1 in all_units:
-        for unit_2 in bad_units + all_shots:
+        animation.insight(unit_1)
+        for unit_2 in (bad_units + all_shots)[collide_checker::]:
             if unit_1 == unit_2:
                 pass
             elif colliding(unit_1, unit_2):
                 unit_1.collide(unit_2)
                 unit_2.collide(unit_1)
+        collide_checker += 1
         # if 1 < unit_1.level < 5:
         #     for x in bad_units:
         #         if get_distance(unit_1, x) <= unit_1.vision_range:
