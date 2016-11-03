@@ -41,6 +41,8 @@ class Animation:
                 (object.x < self.camera.x + self.camera.w + object.r and
                          object.y < self.camera.y + self.camera.h + object.r):
             self.draw(object)
+
+    def check_border(self):
         if world['y'] - self.camera.h // 2 <= self.camera.y:
             self.draw_border_left()
         if world['x'] - self.camera.w // 2 <= self.camera.x:

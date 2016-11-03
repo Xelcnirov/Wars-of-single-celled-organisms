@@ -112,5 +112,7 @@ class Controls:
             #     self.hero.speed['x_right'] = 0
 
     def click(self, event):
-        self.good_shots.append(Projectile(self.hero.x, self.hero.y, event.x + self.camera.x, event.y + self.camera.y))
+        self.good_shots.append(Projectile(self.hero.x, self.hero.y,
+                                          event.x + self.camera.x, event.y + self.camera.y,
+                                          'Good_shots'))
         print(event.x, event.y)

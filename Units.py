@@ -36,9 +36,9 @@ class Unit:
     def tick(self):  # frame actions here
         choice([self.move_down, self.move_up, self.move_left, self.move_right])()
 
-    def kill(self):  # Object destruction function
-        # canvas.delete(self)
-        pass
+    # def kill(self):  # Object destruction function
+    #     # canvas.delete(self)
+    #     pass
 
     def move_to(self, another_object):
         if self.x > another_object.x:
