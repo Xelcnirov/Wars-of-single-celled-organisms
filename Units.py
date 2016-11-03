@@ -1,5 +1,5 @@
 from random import choice
-from World import world
+from World import world, SLAM_RATE
 
 
 class Unit:
@@ -50,15 +50,28 @@ class Unit:
         elif self.y < another_object.y:
             self.move_down()
 
+    # def move_away(self, another_object):
+    #     if self.x > another_object.x:
+    #         self.move_right()
+    #     elif self.x < another_object.x:
+    #         self.move_left()
+    #     if self.y > another_object.y:
+    #         self.move_down()
+    #     elif self.y < another_object.y:
+    #         self.move_up()
     def move_away(self, another_object):
-        if self.x > another_object.x:
-            self.move_right()
-        elif self.x < another_object.x:
-            self.move_left()
-        if self.y > another_object.y:
-            self.move_down()
-        elif self.y < another_object.y:
-            self.move_up()
+        if self.x > another_object.x and self.x + self.r + SLAM_RATE <= world['width']:
+            # self.move_right()
+            self.x += SLAM_RATE
+        elif self.x < another_object.x and self.x - self.r - SLAM_RATE >= world['x']:
+            # self.move_left()
+            self.x -= SLAM_RATE
+        if self.y > another_object.y and self.y + self.r + SLAM_RATE <= world['height']:
+            # self.move_down()
+            self.y += SLAM_RATE
+        elif self.y < another_object.y and self.y - self.r - SLAM_RATE >= world['y']:
+            # self.move_up()
+            self.y -= SLAM_RATE
 
     def shoot(self):  # Doesn't need args, always shoots at hero
         pass

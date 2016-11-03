@@ -50,6 +50,8 @@ class Enemy(Unit):
                     #     another_object.kill()
                     #     self.exp += 1
                     Unit.collide(self, another_object)
+            else:
+                Unit.collide(self, another_object)
 
     def tick(self, unit_list):
         self.counter += 1

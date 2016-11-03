@@ -14,3 +14,4 @@ enemies = 100  # count of enemies
 
 HERO_MAX_SPEED = 10
 DELAY = 10
+SLAM_RATE = 10

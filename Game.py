@@ -10,6 +10,7 @@ from Camera import Camera
 
 
 def get_distance(u1, u2):
+
     return sqrt((u1.x - u2.x)**2 + (u1.y - u2.y)**2)
 
 
@@ -83,13 +84,13 @@ def ticks():  # event
     animation.screen.after(DELAY, ticks)
 
 
-hero = Hero()
 good_units = []
 bad_units = [Enemy(*random_coords(), level=randint(0, 1)) for x in range(enemies)]
 good_shots = []
 bad_shots = []
 
 camera = Camera()
+hero = Hero(camera)
 animation = Animation(camera)
 controls = Controls(camera, hero, animation.screen, good_shots)
 

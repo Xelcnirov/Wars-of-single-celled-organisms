@@ -3,7 +3,7 @@ from World import start, world, HERO_MAX_SPEED
 
 
 class Hero(Unit):
-    def __init__(self, health=10):
+    def __init__(self, camera, health=10):
         Unit.__init__(self, x=start['x'], y=start['y'], r=40, colour='blue')
         self.counter = 0
         self.health = health
@@ -16,6 +16,7 @@ class Hero(Unit):
                       'y_down': 0,
                       'x_right': 0,
                       'x_left': 0}
+        self.camera = camera
 
     def tick(self):  # for fun
         if self.colour == 'green':
@@ -35,6 +36,7 @@ class Hero(Unit):
             self.y = world['y'] + self.r
         else:
             self.y += self.speed['y_up']
+        self.camera.y = self.y - self.camera.h // 2
 
     def move_down(self):
         if self.moving['down']:
@@ -47,6 +49,7 @@ class Hero(Unit):
             self.y = world['height'] - self.r
         else:
             self.y += self.speed['y_down']
+        self.camera.y = self.y - self.camera.h // 2
 
     def move_left(self):
         if self.moving['left']:
@@ -59,6 +62,7 @@ class Hero(Unit):
             self.x = world['x'] + self.r
         else:
             self.x += self.speed['x_left']
+        self.camera.x = self.x - self.camera.w // 2
 
     def move_right(self):
         if self.moving['right']:
@@ -71,6 +75,12 @@ class Hero(Unit):
             self.x = world['width'] - self.r
         else:
             self.x += self.speed['x_right']
+        self.camera.x = self.x - self.camera.w // 2
 
     def collide(self, another_object):
         self.colour = 'green'
+        if another_object.group == 'Enemy':
+            print('HaHa')
+            Unit.collide(self, another_object)
+            self.camera.x = self.x - self.camera.w//2
+            self.camera.y = self.y - self.camera.h//2
