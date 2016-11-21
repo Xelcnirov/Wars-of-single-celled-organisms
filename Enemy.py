@@ -2,7 +2,7 @@ from Units import Unit
 
 
 class Enemy(Unit):
-    def __init__(self, x, y, vision_range=150, level=0, health=1, exp=0, damage=0):
+    def __init__(self, x, y, listed, vision_range=150, level=0, health=1, exp=0, damage=0):
         Unit.__init__(self, x, y, colour='#6d2f84')
         self.logic = {1: {'r': 14, 'speed': 2, 'vision_range': 50, 'health': 1, 'damage': 0, 'colour': '#6d2f84'},
                       2: {'r': 32, 'speed': 12, 'vision_range': 140, 'health': 2, 'damage': 1, 'colour': '#753e58'},
@@ -17,6 +17,7 @@ class Enemy(Unit):
         self.level_up()
         self.alive = True
         self.counter = 0
+        self.listed = listed
 
     def get_ability(self):
         pass
@@ -53,13 +54,13 @@ class Enemy(Unit):
             else:
                 Unit.collide(self, another_object)
 
-    def tick(self, unit_list):
+    def tick(self):
         self.counter += 1
         if self.counter > 3:
             Unit.tick(self)
             self.counter = 0
         if not self.alive:
-            unit_list.remove(self)
+            self.listed.remove(self)
         if self.exp >= 3 and self.level < 5:
             self.level_up()
 
