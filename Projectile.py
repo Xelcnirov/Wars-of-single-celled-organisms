@@ -1,25 +1,23 @@
 from Units import Unit
 
 
+
 class Projectile(Unit):
-    def __init__(self, x, y, target_x, target_y, group):
+    def __init__(self, x, y, target_x, target_y, group, listed):
         Unit.__init__(self, x, y, r=7, shooting_range=300, speed=15, colour='red')
         self.target_x = target_x
         self.target_y = target_y
         self.step = self.shooting_range/self.speed
         self.proj_calc(target_x, target_y)
         self.group = group
+        self.listed = listed
 
     def proj_calc(self, target_x, target_y):
-        slip_x = target_x - self.x
-        slip_y = target_y - self.y
+        slip_x = abs(target_x - self.x)
+        slip_y = abs(target_y - self.y)
         self.breaker = 1
         self.side = True
         self.check_shot = True
-        if slip_x < 0:
-            slip_x *= -1
-        if slip_y < 0:
-            slip_y *= -1
         if slip_x > slip_y:
             self.breaker = slip_y / slip_x
             self.side = True
@@ -43,6 +41,8 @@ class Projectile(Unit):
         self.tick()
 
     def tick(self):
+        if self.step == 0:
+            self.listed.remove(self)
         if self.step and self.check_shot:
             #animation.delete_obj(self)
             if self.side:

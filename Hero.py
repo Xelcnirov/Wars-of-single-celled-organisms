@@ -18,7 +18,7 @@ class Hero(Unit):
                       'x_left': 0}
         self.camera = camera
 
-    def tick(self, a):  # for fun
+    def tick(self):  # for fun
         if self.colour == 'green':
             self.counter += 1
         if self.counter > 15:

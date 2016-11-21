@@ -32,23 +32,22 @@ flag = 1
 
 def ticks():  # event
     t = time.time()
-    all_units = [hero] + bad_units
-    all_shots = good_shots + bad_shots
+    good_shots_copy = good_shots[:]
+    bad_shots_copy = bad_shots[:]
+    bad_units_copy = bad_units[:]
     animation.screen.delete('all')
     animation.check_border()
     # for x in all_shots + all_units:
     #     # animation.delete_obj(x)
     #     animation.insight(x)
-    animation.insight(all_shots + all_units)
+    animation.insight(good_shots + bad_shots + [hero] + bad_units)
 
-    for shots in [good_shots] + [bad_shots]:
+    for shots in [good_shots_copy] + [bad_shots_copy]:
         for shot in shots:
-            if shot.step == 0:
-                shots.remove(shot)
             shot.tick()
     collide_checker = 0
-    for unit_1 in all_units:
-        for unit_2 in (bad_units + all_shots)[collide_checker:]:
+    for unit_1 in [hero] + bad_units_copy:
+        for unit_2 in (bad_units_copy + good_shots + bad_shots)[collide_checker:]:
             # if colliding(unit_1, unit_2):
             if unit_1.group == 'Enemy' and unit_2.group == 'Enemy':
                 if abs(unit_1.x - unit_2.x) <= unit_1.vision_range >= abs(unit_1.y - unit_2.y):
@@ -62,7 +61,7 @@ def ticks():  # event
                     unit_1.collide(unit_2)
                     unit_2.collide(unit_1)
 
-        unit_1.tick(bad_units)
+        unit_1.tick()
         collide_checker += 1
 
     # s = 0
@@ -92,9 +91,10 @@ def ticks():  # event
 
 
 good_units = []
-bad_units = [Enemy(*random_coords(), level=randint(0, 1)) for x in range(enemies)]
+bad_units = []
 good_shots = []
 bad_shots = []
+bad_units.extend([Enemy(*random_coords(), bad_units, level=randint(0, 1)) for x in range(enemies)])
 
 camera = Camera()
 hero = Hero(camera)

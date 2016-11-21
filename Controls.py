@@ -114,5 +114,5 @@ class Controls:
     def click(self, event):
         self.good_shots.append(Projectile(self.hero.x, self.hero.y,
                                           event.x + self.camera.x, event.y + self.camera.y,
-                                          'Good_shots'))
+                                          'Good_shots', self.good_shots))
         print(event.x, event.y)
