@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, randint
 from World import world, SLAM_RATE
 
 
@@ -33,22 +33,33 @@ class Unit:
     def collide(self, another_object):  # need World's collide func
         self.move_away(another_object)
 
+    # def tick(self):  # frame actions here
+    #     choice([self.move_down, self.move_up, self.move_left, self.move_right])()
+
     def tick(self):  # frame actions here
-        choice([self.move_down, self.move_up, self.move_left, self.move_right])()
+        a = choice([self.move_down, self.move_up, self.hold])
+        b = choice([self.move_left, self.move_right, self.hold])
+        c = randint(1, 2)
+        for i in range(c):
+            a()
+            b()
+
+    def hold(self):
+        pass
 
     # def kill(self):  # Object destruction function
     #     # canvas.delete(self)
     #     pass
 
-    def move_to(self, another_object):
-        if self.x > another_object.x:
-            self.move_left()
-        elif self.x < another_object.x:
-            self.move_right()
-        if self.y > another_object.y:
-            self.move_up()
-        elif self.y < another_object.y:
-            self.move_down()
+    # def move_to(self, another_object):
+    #     if self.x > another_object.x:
+    #         self.move_left()
+    #     elif self.x < another_object.x:
+    #         self.move_right()
+    #     if self.y > another_object.y:
+    #         self.move_up()
+    #     elif self.y < another_object.y:
+    #         self.move_down()
 
     # def move_away(self, another_object):
     #     if self.x > another_object.x:

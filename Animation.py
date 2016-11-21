@@ -36,11 +36,12 @@ class Animation:
                                             [world['x'] - self.camera.x, world['height'] - self.camera.y],
                                             width=5, fill='#427c0b')
 
-    def insight(self, object):
-        if (object.x > self.camera.x - object.r and object.y > self.camera.y - object.r) and \
-                (object.x < self.camera.x + self.camera.w + object.r and
-                         object.y < self.camera.y + self.camera.h + object.r):
-            self.draw(object)
+    def insight(self, obj_list):
+        for object in obj_list:
+            if (object.x > self.camera.x - object.r and object.y > self.camera.y - object.r) and \
+                    (object.x < self.camera.x + self.camera.w + object.r and
+                             object.y < self.camera.y + self.camera.h + object.r):
+                self.draw(object)
 
     def check_border(self):
         if world['y'] - self.camera.h // 2 <= self.camera.y:

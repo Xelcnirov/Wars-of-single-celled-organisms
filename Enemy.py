@@ -5,7 +5,7 @@ class Enemy(Unit):
     def __init__(self, x, y, vision_range=150, level=0, health=1, exp=0, damage=0):
         Unit.__init__(self, x, y, colour='#6d2f84')
         self.logic = {1: {'r': 14, 'speed': 2, 'vision_range': 50, 'health': 1, 'damage': 0, 'colour': '#6d2f84'},
-                      2: {'r': 32, 'speed': 12, 'vision_range': 120, 'health': 2, 'damage': 1, 'colour': '#753e58'},
+                      2: {'r': 32, 'speed': 12, 'vision_range': 140, 'health': 2, 'damage': 1, 'colour': '#753e58'},
                       3: {'r': 47, 'speed': 10, 'vision_range': 160, 'health': 3, 'damage': 2, 'colour': '#774e2c'},
                       4: {'r': 65, 'speed': 8, 'vision_range': 200, 'health': 4, 'damage': 3, 'colour': '#a39b49'},
                       5: {'r': 80, 'speed': 4, 'vision_range': 220, 'health': 6, 'damage': 3, 'colour': '#6aa349'}}
@@ -62,6 +62,17 @@ class Enemy(Unit):
             unit_list.remove(self)
         if self.exp >= 3 and self.level < 5:
             self.level_up()
+
+    def move_to(self, another_object):
+        if 1 < self.level < 5:
+            if self.x > another_object.x:
+                self.move_left()
+            elif self.x < another_object.x:
+                self.move_right()
+            if self.y > another_object.y:
+                self.move_up()
+            elif self.y < another_object.y:
+                self.move_down()
 
     def kill(self):  # Object destruction function
         # canvas.delete(self)

@@ -7,21 +7,19 @@ from Hero import Hero
 from Animation import Animation
 from Controls import Controls
 from Camera import Camera
+import time
 
 
-def get_distance(u1, u2):
-    if abs(u1.x - u2.x) <= u1.r + u2.r >= abs(u1.y - u2.y):
-        return sqrt((u1.x - u2.x)**2 + (u1.y - u2.y)**2)
-    else:
-        return False
+# def get_distance(u1, u2):
+#     if abs(u1.x - u2.x) <= u1.r + u2.r >= abs(u1.y - u2.y):
+#         return sqrt((u1.x - u2.x)**2 + (u1.y - u2.y)**2)
+#     else:
+#         return False
 
 
 def colliding(u1, u2):
-    dist = get_distance(u1, u2)
-    if dist:
-        return dist <= u1.r + u2.r
-    else:
-        return False
+    dist = sqrt((u1.x - u2.x)**2 + (u1.y - u2.y)**2)
+    return dist <= u1.r + u2.r
 
 
 def random_coords():
@@ -29,7 +27,11 @@ def random_coords():
     return x, y
 
 
+flag = 1
+
+
 def ticks():  # event
+    t = time.time()
     all_units = [hero] + bad_units
     all_shots = good_shots + bad_shots
     animation.screen.delete('all')
@@ -37,58 +39,55 @@ def ticks():  # event
     # for x in all_shots + all_units:
     #     # animation.delete_obj(x)
     #     animation.insight(x)
+    animation.insight(all_shots + all_units)
 
     for shots in [good_shots] + [bad_shots]:
         for shot in shots:
-            animation.insight(shot)
             if shot.step == 0:
-                # animation.delete_obj(x)
                 shots.remove(shot)
             shot.tick()
     collide_checker = 0
     for unit_1 in all_units:
-        animation.insight(unit_1)
-        for unit_2 in (bad_units + all_shots)[collide_checker::]:
-            if unit_1 == unit_2:
-                pass
-            elif colliding(unit_1, unit_2):
-                unit_1.collide(unit_2)
-                unit_2.collide(unit_1)
-        collide_checker += 1
-        # if 1 < unit_1.level < 5:
-        #     for x in bad_units:
-        #         if get_distance(unit_1, x) <= unit_1.vision_range:
-        #             if unit_1.level - x.level == 1 or unit_1.level - x.level == 2:
-        #                 unit_1.move_to(x)
+        for unit_2 in (bad_units + all_shots)[collide_checker:]:
+            # if colliding(unit_1, unit_2):
+            if unit_1.group == 'Enemy' and unit_2.group == 'Enemy':
+                if abs(unit_1.x - unit_2.x) <= unit_1.vision_range >= abs(unit_1.y - unit_2.y):
+                    if unit_1.level - unit_2.level == 1 or unit_1.level - unit_2.level == 2:
+                        unit_1.move_to(unit_2)
+                if abs(unit_1.x - unit_2.x) <= unit_2.vision_range >= abs(unit_1.y - unit_2.y):
+                    if unit_2.level - unit_1.level == 1 or unit_2.level - unit_1.level == 2:
+                        unit_2.move_to(unit_1)
+            if abs(unit_1.x - unit_2.x) <= unit_1.r + unit_2.r >= abs(unit_1.y - unit_2.y):
+                if colliding(unit_1, unit_2):
+                    unit_1.collide(unit_2)
+                    unit_2.collide(unit_1)
 
-    # for u1 in bad_units: # + [hero]:
-    #     for u2 in bad_units + [hero]:
-    #         if u1 == u2:
-    #             pass
-    #         elif colliding(u1, u2):
-    #             u1.collide(u2)
-    #             u2.collide(u1)
-    ## for u1 in bad_units:
-        # for u2 in good_shots:
-        #     if colliding(u1, u2):
-        #         # u1.collide(u2)
-        #         u2.collide()
+        unit_1.tick(bad_units)
+        collide_checker += 1
+
+    # s = 0
     # for unit in bad_units:
-    #     # unit.tick(bad_units)
+    #     unit.tick(bad_units)
     #     # if unit.exp >= 5 > unit.level:
     #     #     unit.level_up()
     #     if 1 < unit.level < 5:
-    #         for x in bad_units:
-    #             if get_distance(unit, x) <= unit.vision_range:
+    #         for x in bad_units[s:]:
+    #             if abs(unit.x - x.x) <= unit.vision_range >= abs(unit.y - x.y):
     #                 if unit.level - x.level == 1 or unit.level - x.level == 2:
     #                     unit.move_to(x)
+    #             if 1 < x.level < 5:
+    #                 if abs(unit.x - x.x) <= x.vision_range >= abs(unit.y - x.y):
+    #                     if x.level - unit.level == 1 or x.level - unit.level == 2:
+    #                         x.move_to(unit)
+    #         s += 1
     #                     # print('moving')
     #                     # break
         # else:
         #     unit.tick(bad_units)
-    # for x in good_shots:
-    #     x.tick()
-    hero.tick()
+    if flag:
+        global flag
+        flag = 0
+        print('%.6f' % (time.time() - t))
     animation.screen.after(DELAY, ticks)
 
 
@@ -116,7 +115,6 @@ animation.screen.bind('<space>', where)
 animation.screen.bind('<Key>', controls.key_pressed)  # <KeyPress>
 animation.screen.bind('<KeyRelease>', controls.key_release)  # <KeyRelease>
 animation.screen.bind('<Button-1>', controls.click)
-#screen.bind('<Motion>', ticks)
 #screen.screen.focus_set()
 
 mainloop()

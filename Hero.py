@@ -18,7 +18,7 @@ class Hero(Unit):
                       'x_left': 0}
         self.camera = camera
 
-    def tick(self):  # for fun
+    def tick(self, a):  # for fun
         if self.colour == 'green':
             self.counter += 1
         if self.counter > 15:
@@ -80,7 +80,7 @@ class Hero(Unit):
     def collide(self, another_object):
         self.colour = 'green'
         if another_object.group == 'Enemy':
-            print('HaHa')
+            # print('HaHa')
             Unit.collide(self, another_object)
             self.camera.x = self.x - self.camera.w//2
             self.camera.y = self.y - self.camera.h//2
