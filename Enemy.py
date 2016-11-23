@@ -35,7 +35,7 @@ class Enemy(Unit):
 
     def collide(self, another_object):
         if another_object.group == 'Hero':
-            print('hoho')
+            # print('hoho')
             Unit.collide(self, another_object)
         elif another_object.group == 'Good_shots':
             # print('yeye')

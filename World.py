@@ -10,7 +10,7 @@ start = {'x': 500,  # >= camera_size['width']/2
 camera_size = {'width': 900,
                'height': 750}
 
-enemies = 300  # count of enemies
+enemies = 500  # count of enemies
 
 HERO_MAX_SPEED = 10
 DELAY = 10

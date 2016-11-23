@@ -37,19 +37,26 @@ def ticks():  # event
     bad_units_copy = bad_units[:]
     animation.screen.delete('all')
     animation.check_border()
-    # for x in all_shots + all_units:
-    #     # animation.delete_obj(x)
-    #     animation.insight(x)
+    # len_b_units = len(bad_units_copy)
+    # len_g_shots = len(good_shots_copy)
+
     animation.insight(good_shots + bad_shots + [hero] + bad_units)
 
     for shots in [good_shots_copy] + [bad_shots_copy]:
         for shot in shots:
             shot.tick()
+
+    for unit in bad_units_copy + bad_shots_copy:
+        if abs(unit.x - hero.x) <= unit.r + hero.r >= abs(unit.y - hero.y):
+            if colliding(unit, hero):
+                unit.collide(hero)
+                hero.collide(unit)
+    hero.tick()
     collide_checker = 0
-    for unit_1 in [hero] + bad_units_copy:
-        for unit_2 in (bad_units_copy + good_shots + bad_shots)[collide_checker:]:
+    for unit_1 in bad_units_copy:
+        for unit_2 in (bad_units_copy + good_shots_copy)[collide_checker:]:
             # if colliding(unit_1, unit_2):
-            if unit_1.group == 'Enemy' and unit_2.group == 'Enemy':
+            if unit_2.group == 'Enemy':
                 if abs(unit_1.x - unit_2.x) <= unit_1.vision_range >= abs(unit_1.y - unit_2.y):
                     if unit_1.level - unit_2.level == 1 or unit_1.level - unit_2.level == 2:
                         unit_1.move_to(unit_2)
@@ -60,29 +67,8 @@ def ticks():  # event
                 if colliding(unit_1, unit_2):
                     unit_1.collide(unit_2)
                     unit_2.collide(unit_1)
-
         unit_1.tick()
         collide_checker += 1
-
-    # s = 0
-    # for unit in bad_units:
-    #     unit.tick(bad_units)
-    #     # if unit.exp >= 5 > unit.level:
-    #     #     unit.level_up()
-    #     if 1 < unit.level < 5:
-    #         for x in bad_units[s:]:
-    #             if abs(unit.x - x.x) <= unit.vision_range >= abs(unit.y - x.y):
-    #                 if unit.level - x.level == 1 or unit.level - x.level == 2:
-    #                     unit.move_to(x)
-    #             if 1 < x.level < 5:
-    #                 if abs(unit.x - x.x) <= x.vision_range >= abs(unit.y - x.y):
-    #                     if x.level - unit.level == 1 or x.level - unit.level == 2:
-    #                         x.move_to(unit)
-    #         s += 1
-    #                     # print('moving')
-    #                     # break
-        # else:
-        #     unit.tick(bad_units)
     if flag:
         global flag
         flag = 0
