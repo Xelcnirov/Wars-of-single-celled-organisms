@@ -1,4 +1,5 @@
 from Units import Unit
+from World import world, PROJ_BORD_COEF
 
 
 
@@ -41,6 +42,11 @@ class Projectile(Unit):
         self.tick()
 
     def tick(self):
+        if self.x + self.r + PROJ_BORD_COEF >= world['width'] \
+                or self.x - self.r - PROJ_BORD_COEF <= world['x'] \
+                or self.y + self.r + PROJ_BORD_COEF >= world['height'] \
+                or self.y - self.r - PROJ_BORD_COEF <= world['y']:
+            self.step = 0
         if self.step == 0:
             self.listed.remove(self)
         if self.step and self.check_shot:
@@ -64,3 +70,7 @@ class Projectile(Unit):
     def collide(self, another_unit):
         if self.group == 'Good_shots' and another_unit.group == 'Enemy':
             self.step = 0
+            try:
+                self.listed.remove(self)
+            except ValueError:
+                pass

@@ -10,8 +10,12 @@ start = {'x': 500,  # >= camera_size['width']/2
 camera_size = {'width': 900,
                'height': 750}
 
-enemies = 500  # count of enemies
+ENEMIES = 100  # count of enemies
+FOOD = 200
+
 
 HERO_MAX_SPEED = 10
+ENEMY_MAX_SPEED = 5
 DELAY = 10
 SLAM_RATE = 10
+PROJ_BORD_COEF = 10
